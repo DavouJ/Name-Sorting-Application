@@ -1,7 +1,19 @@
 package org.davousorting;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) {
-        System.out.println("Hello world!");
+    private ArrayList<String> namesArray = new ArrayList<>();
+    public static void main(String[] args){
+        new Main(args);
     }
+
+    public Main(String[] fileName){
+        //System.out.println(fileName[0]);
+        NameList nameList = new NameList(fileName);
+    }
+
+
 }
+
