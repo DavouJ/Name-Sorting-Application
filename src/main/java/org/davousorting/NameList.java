@@ -13,7 +13,7 @@ public class NameList{
     private Path sortedFile = Paths.get("sorted-names-list.txt");
     //create a function that takes an array of strings(names) and sorts them alphabetically
     public NameList(String[] fileName){
-        Scanner scan = new Scanner(System.in);
+
 
 
         if(fileName.length != 0) {
@@ -22,17 +22,20 @@ public class NameList{
             userInput= null;
         }
 
-        while (!doesFileExist() ){
-            System.out.println("Enter a valid .txt file:");
-            userInput = scan.nextLine();
-        }
 
-        fileToArray();
+        validateFile();
         sortList();
         writeSortedNames();
         System.out.println("Names sorted and stored in sorted-names-list.txt");
     }
 
+    private void validateFile(){
+        Scanner scan = new Scanner(System.in);
+        while (userInput == null ){
+            System.out.println("Enter a valid .txt file:");
+            userInput = scan.nextLine();
+        }
+    }
     private Boolean doesFileExist(){
         if(userInput != null){
             return true;
@@ -41,24 +44,36 @@ public class NameList{
         }
     }
 
-    private void fileToArray(){
+    private void sortList(){
         try (BufferedReader br = new BufferedReader(new FileReader(userInput))) {
             String line = br.readLine();
             while(line != null){
+
                 namesArray.add(line);
                 line= br.readLine();
-                //name = namesListFile.readLine();
             }
         } catch (IOException | NullPointerException e) {
             System.out.println(e);
         }
+        flipName();
+        //Collections.sort(namesArray);
     }
 
-    private void sortList(){
-        Collections.sort(namesArray);
+    private void flipName(){
+        System.out.println(namesArray.get(0));
+        String[] tempArr = namesArray.get(0).split("");
+        int n = namesArray.size();
+        int i;
+        String  t;
+        for(i=0;i< n/2;i++){
+            t = tempArr[i];
+            tempArr[i] = tempArr[n-i-1];
+            tempArr[n-i-1]=t;
+        }
+        String flippedLine = tempArr.toString();
+
 
     }
-
     private void writeSortedNames(){
         try{
             Files.write(sortedFile, namesArray, StandardCharsets.UTF_8);
