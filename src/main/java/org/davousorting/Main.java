@@ -1,21 +1,26 @@
 package org.davousorting;
-import java.awt.Desktop;
-import java.io.File;
-import java.io.IOException;
 
+import java.util.Scanner;
+
+/**
+ * Driver class
+ */
 public class Main {
     public static void main(String[] args){
         new Main(args);
     }
 
-    public Main(String[] userInput){
+    /**
+     * @param args the .txt file entered by the user in the command line
+     */
+    public Main(String[] args){
 
-        NameList nameList = new NameList(userInput);
+        NameList nameList = new NameList(args);
         nameList.sortByLastName();
+        nameList.printList();
         nameList.openFile();
     }
 
-
-
 }
+
 
