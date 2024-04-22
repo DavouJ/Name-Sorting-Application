@@ -2,6 +2,7 @@ package org.davousorting;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
+import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
@@ -9,24 +10,22 @@ import java.awt.*;
 
 public class NameList{
     private ArrayList<String> namesArray = new ArrayList<>();
-    private String userInput;
     private Path sortedFile = Paths.get("sorted-names-list.txt");
+    private String userInput;
+
     //create a function that takes an array of strings(names) and sorts them alphabetically
-    public NameList(String[] fileName){
+    public NameList(String[] userInput){
 
-
-
-        if(fileName.length != 0) {
-            userInput= fileName[0];
+        if(userInput.length != 0) {
+            this.userInput= userInput[0];
         }else{
             userInput= null;
         }
 
-
         validateFile();
-        sortList();
-        writeSortedNames();
-        System.out.println("Names sorted and stored in sorted-names-list.txt");
+        readNameList();
+        //writeSortedNames();
+        System.out.println("Name list read");
     }
 
     private void validateFile(){
@@ -36,6 +35,7 @@ public class NameList{
             userInput = scan.nextLine();
         }
     }
+
     private Boolean doesFileExist(){
         if(userInput != null){
             return true;
@@ -44,36 +44,47 @@ public class NameList{
         }
     }
 
-    private void sortList(){
+    private void readNameList(){
         try (BufferedReader br = new BufferedReader(new FileReader(userInput))) {
             String line = br.readLine();
             while(line != null){
-
                 namesArray.add(line);
                 line= br.readLine();
             }
         } catch (IOException | NullPointerException e) {
-            System.out.println(e);
+            userInput = null;
+            validateFile();
+            readNameList();
         }
-        flipName();
-        //Collections.sort(namesArray);
     }
 
-    private void flipName(){
-        System.out.println(namesArray.get(0));
-        String[] tempArr = namesArray.get(0).split("");
-        int n = namesArray.size();
-        int i;
-        String  t;
-        for(i=0;i< n/2;i++){
-            t = tempArr[i];
-            tempArr[i] = tempArr[n-i-1];
-            tempArr[n-i-1]=t;
-        }
-        String flippedLine = tempArr.toString();
-
-
+    public void sortByLastName(){
+        flipNames();
+        Collections.sort(namesArray);
+        flipNames();
+        writeSortedNames();
     }
+
+    private void flipNames(){
+        for(int i = 0;i< namesArray.size(); i++) {
+            String[] tempArr = namesArray.get(i).split(" ");
+            int n = tempArr.length;
+            int j;
+            String t;
+
+            for (j = 0; j < n / 2; j++) {
+                t = tempArr[j];
+                tempArr[j] = tempArr[n - j - 1];
+                tempArr[n - j - 1] = t;
+            }
+            namesArray.set(i, String.join(" ",tempArr));
+        }
+    }
+    public void sort(){
+        Collections.sort(namesArray);
+        writeSortedNames();
+    }
+
     private void writeSortedNames(){
         try{
             Files.write(sortedFile, namesArray, StandardCharsets.UTF_8);
@@ -83,7 +94,17 @@ public class NameList{
         }
     }
 
-    public Path getSortedFile(){
+    private Path getSortedFile(){
         return sortedFile;
+    }
+
+    public void openFile(){
+
+        File sortedFile = new File(this.sortedFile.toFile().toString());
+        try {
+            Desktop.getDesktop().open(sortedFile);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

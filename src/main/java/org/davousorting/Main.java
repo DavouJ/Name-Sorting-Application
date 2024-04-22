@@ -8,21 +8,14 @@ public class Main {
         new Main(args);
     }
 
-    public Main(String[] fileName){
-        //System.out.println(fileName[0]);
-        NameList nameList = new NameList(fileName);
-        openFile(nameList);
+    public Main(String[] userInput){
+
+        NameList nameList = new NameList(userInput);
+        nameList.sortByLastName();
+        nameList.openFile();
     }
 
-    private void openFile(NameList nameList){
 
-        File sortedFile = new File(nameList.getSortedFile().toFile().toString());
-        try {
-            Desktop.getDesktop().open(sortedFile);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
 }
 
