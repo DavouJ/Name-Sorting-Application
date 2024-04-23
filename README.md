@@ -16,7 +16,7 @@ This Name Sorter is a Java program designed to organise a set of names alphabeti
 This program can be handled from the command line using java commands OR using Maven. Using maven will enable you to package and run the program's tests in one line.
 
 ### Command Line ###
-From the root, navigate to `davousourting` directory:
+From the root, navigate to the `davousourting` directory:
 `\src\main\java\org\davousorting`
 
 Enter this command:
@@ -38,7 +38,7 @@ IF YOU DO NOT HAVE MAVEN INSTALLED ON YOUR SYSTEM, USE `mvmw` INSTEAD OF `mvn`.
 
 ## Operation
 
-Once you have entered the above command, the application will print out the list of sorted names in the command line:
+Once you have entered one of the above commands, the application will print out the list of sorted names in the command line:
 ![terminal execution script](./assets/Screenshot_1.jpg)
 
 Alongside this, the program will create (or overwrite if already created) a .txt file with the sorted names and open it on the screen:
@@ -48,6 +48,10 @@ Alongside this, the program will create (or overwrite if already created) a .txt
 If you want to change the file used in this program, replace the `unsorted-names-list.txt` file within the working directory with a .txt file of your choosing.
 
 ![working dir](./assets/Screenshot_4.jpg)
+
+Be sure to pass the new file as an argument when executing the code:
+
+![new file in terminal](./assets/Screenshot_3.jpg)
 
 ## Test
 
