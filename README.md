@@ -20,7 +20,7 @@ From the root, navigate to the `davousourting` directory:
 `\src\main\java\org\davousorting`
 
 Enter this command:
-- `java Main.java ./unsorted-names-list`
+- `java Main.java ./unsorted-names-list.txt`
 
 This code can also be executed directly from the root folder, though it requires a longer command:
 
@@ -34,7 +34,7 @@ The following command will build the project, running all the tests for the prog
 
 - `mvn package`
 
-IF YOU DO NOT HAVE MAVEN INSTALLED ON YOUR SYSTEM, USE `mvmw` INSTEAD OF `mvn`.
+IF YOU DO NOT HAVE MAVEN INSTALLED ON YOUR SYSTEM, USE `./mvmw` INSTEAD OF `mvn`.
 
 ## Operation
 
