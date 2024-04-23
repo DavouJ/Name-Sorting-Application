@@ -13,15 +13,31 @@ This Name Sorter is a Java program designed to organise a set of names alphabeti
 - [License](#license)
 
 ## Deployment
-This program can be executed from the command line:
+This program can be handled from the command line using java commands OR using Maven. Using maven will enable you to package and run the program's tests in one line.
 
+### Command Line ###
 From the root, navigate to `davousourting` directory:
 `\src\main\java\org\davousorting`
 
 Enter this command:
 - `java Main.java ./unsorted-names-list`
 
+This code can also be executed directly from the root folder, though it requires a longer command:
+
+- `java src\main\java\org\davousorting\Main.java ./src/main/java/org/davousorting/unsorted-names-list.txt`
+
+
+
+### Maven ###
+
+The following command will build the project, running all the tests for the program.
+
+- `mvn package`
+
+IF YOU DO NOT HAVE MAVEN INSTALLED ON YOUR SYSTEM, USE `mvmw` INSTEAD OF `mvn`.
+
 ## Operation
+
 Once you have entered the above command, the application will print out the list of sorted names in the command line:
 ![terminal execution script](./assets/Screenshot_1.jpg)
 
@@ -35,14 +51,15 @@ If you want to change the file used in this program, replace the `unsorted-names
 
 ## Test
 
-Test can be found in
+Test can be found within the test directory:
+
+`src\test\java\org\davousorting`
 
 ## Credits
 
 Source code created by Davou Jobbi.
 
 Inspiration from Dye & Durham.
-
 
 ## License
 
