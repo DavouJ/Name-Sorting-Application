@@ -5,12 +5,14 @@ import java.nio.file.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.awt.*;
-import java.util.Scanner;
+
 
 /**
  * This class handles the .txt file given by the user via the command line
  */
+
 public class NameList{
+
     private ArrayList<String> namesArray = new ArrayList<>();
     private Path sortedFile = Paths.get("sorted-names-list.txt");
     private String userInput;
@@ -27,29 +29,49 @@ public class NameList{
 
         if(userInput.length != 0) {
             this.userInput= userInput[0];
-        }else{
-            userInput= null;
         }
 
-        this.userInput = validateFile(this.userInput);
+        validateFileEntered(this.userInput);
         this.namesArray = readNameList(namesArray, this.userInput );
+    }
+
+    /**
+     * Validates whether the given .txt file is
+     * entered.
+     *
+     * @param userInput the .txt file passed as an argument from the command line.
+     */
+    public void validateFileEntered(String userInput ){
+        if(userInput == null){
+            throw new RuntimeException("NO TEXT FILE ENTERED, PLEASE ENTER THE FILE NAME YOU WISH TO SORT.");
+        }
     }
 
     /**
      * Validates whether the given .txt file
      * exists.
      *
-     * @param userInput the .txt file passed as an argument from the command line.
-     * @return the .txt file passed as an argument from the command line OR
-     * a new userInput from the command line.
+     * @param e the error generated from an uncompleted file read.
      */
-    public static String validateFile(String userInput){
-        Scanner scan = new Scanner(System.in);
-        while (userInput == null ){
-            System.out.println("Enter a valid .txt file:");
-            userInput = scan.nextLine();
+    public void validateFileExists(Exception e){
+        if(e != null){
+            throw new RuntimeException("FAILED TO READ SPECIFIED FILE, PLEASE ENTER A VALID FILE.");
         }
-        return userInput;
+    }
+
+    /**
+     * Validates whether the given .txt file
+     * contains full names with more than 3
+     * given names.
+     *
+     * @param nameLength the length of the currently selected name within the name list.
+     */
+    public void validateNameLength(Integer nameLength ){
+        if(nameLength != null ){
+            if(nameLength > 4 ) {
+                throw new RuntimeException("FILE CONTAINS NAME(S) WITH MORE THAN 3 GIVEN NAMES, PLEASE ENTER A VALID FILE.");
+            }
+        }
     }
 
     /**
@@ -70,8 +92,8 @@ public class NameList{
 
         } catch (IOException | NullPointerException e) {
             userInput = null;
-            userInput = validateFile(userInput);
-            namesArray = readNameList(namesArray, userInput );
+            validateFileExists( e);
+
         }
         return namesArray;
     }
@@ -86,11 +108,8 @@ public class NameList{
         for(int i = 0;i< namesArray.size(); i++) {
             String[] tempArr = namesArray.get(i).split(" ");
             int n = tempArr.length;
-            if(n>4){
-                System.out.println("File contains Name with more than 3 given names, cannot sort.");
-                userInput=null;
-                break;
-            }
+            validateNameLength(n);
+
             int j;
             String t;
 
@@ -101,11 +120,7 @@ public class NameList{
             }
             namesArray.set(i, String.join(" ",tempArr));
         }
-        if(userInput == null) {
-            namesArray.clear();
-            userInput = validateFile(userInput);
-            namesArray = readNameList(namesArray, userInput);
-        }
+
     }
 
     /**
@@ -157,10 +172,20 @@ public class NameList{
         }
     }
 
+    /**
+     * Lists the sorted names in the command line
+     */
     public void printList(){
         for(int i = 0; i<namesArray.size();i++){
             System.out.println(namesArray.get(i));
         }
     }
 
+    /**
+     * Getter for the file path,
+     * mainly for testing
+     */
+    public Path getPath(){
+        return sortedFile;
+    }
 }
